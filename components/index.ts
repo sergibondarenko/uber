@@ -1,1 +1,1 @@
-export { NavOptions } from './NavOptions';
+export { NavOptions, RootStackParamList } from './navigation/NavOptions';

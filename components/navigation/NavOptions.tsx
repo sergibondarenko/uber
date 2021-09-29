@@ -1,7 +1,14 @@
 import React from 'react';
 import { Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
-import { EatsImage, RideImage, IImage } from './images';
+import { EatsImage, RideImage, IImage } from '../images';
+import { MAP_SCREEN, EATS_SCREEN, HOME_SCREEN } from '../../constants';
+
+export type RootStackParamList = {
+  [HOME_SCREEN]: undefined;
+  [MAP_SCREEN]: undefined;
+};
 
 const styles = StyleSheet.create({
   navList__item: {
@@ -22,7 +29,7 @@ const styles = StyleSheet.create({
     fontWeight: '600'
   },
   navList__itemNextIcon: {
-    width: 30,
+    width: 28,
     padding: 2,
     marginTop: 4,
     backgroundColor: 'black',
@@ -40,14 +47,14 @@ export interface INavOption {
 const rideNavOption: INavOption = {
   id: '123',
   title: 'Get a ride',
-  screen: 'MapScreen',
+  screen: MAP_SCREEN,
   image: RideImage
 };
 
 const eatNavOption: INavOption = {
   id: '456',
   title: 'Order food',
-  screen: 'EatsScreen',
+  screen: EATS_SCREEN,
   image: EatsImage
 };
 
@@ -56,13 +63,18 @@ export function NavNextIcon() {
 }
 
 export function NavList() {
+  const navigation = useNavigation();
   const navData: Array<INavOption> = [rideNavOption, eatNavOption];
+
+  function handleItemPress(screenName: string) {
+    navigation.navigate(screenName as never);
+  }
 
   function renderItem({ item }: { item: INavOption }) {
     const NavImage = item.image;
 
     return (
-      <TouchableOpacity style={styles.navList__item}>
+      <TouchableOpacity style={styles.navList__item} onPress={() => handleItemPress(item.screen)}>
         <NavImage style={styles.navList__itemImage} />
         <Text style={styles.navList__itemText}>{item.title}</Text>
         <NavNextIcon /> 
