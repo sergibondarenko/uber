@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, View, Image } from 'react-native';
+import { StyleSheet, SafeAreaView, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavOptions } from '../components';
 import { UberImage } from '../components/images';
 

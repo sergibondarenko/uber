@@ -3,10 +3,22 @@ import { Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { EatsImage, RideImage, IImage } from './images';
 
 const styles = StyleSheet.create({
-  navList__image: {
+  navList__item: {
+    margin: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 20,
+    backgroundColor: '#e5e7eb'
+  },
+  navList__itemImage: {
     width: 120,
     height: 120,
     resizeMode: 'contain'
+  },
+  navList__itemText: {
+    margin: 5,
+    fontSize: 13,
+    lineHeight: 13,
+    fontWeight: '600'
   }
 });
 
@@ -34,13 +46,13 @@ const eatNavOption: INavOption = {
 const navData: Array<INavOption> = [rideNavOption, eatNavOption];
 
 export function NavList() {
-  function renderNavItem({ item }: { item: INavOption }) {
+  function renderItem({ item }: { item: INavOption }) {
     const NavImage = item.image;
 
     return (
-      <TouchableOpacity>
-        <Text>{item.title}</Text>
-        <NavImage style={styles.navList__image} />
+      <TouchableOpacity style={styles.navList__item}>
+        <NavImage style={styles.navList__itemImage} />
+        <Text style={styles.navList__itemText}>{item.title}</Text>
       </TouchableOpacity>
     );
   }
@@ -54,7 +66,7 @@ export function NavList() {
       data={navData}
       horizontal
       keyExtractor={keyExtractor}
-      renderItem={renderNavItem}
+      renderItem={renderItem}
     />
   );
 }
