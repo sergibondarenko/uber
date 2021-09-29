@@ -2,8 +2,8 @@ import React from 'react';
 import { Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
-import { EatsImage, RideImage, IImage } from '../images';
-import { MAP_SCREEN, EATS_SCREEN, HOME_SCREEN } from '../../constants';
+import { EatsImage, RideImage, IImage } from './images';
+import { MAP_SCREEN, EATS_SCREEN, HOME_SCREEN } from '../constants';
 
 export type RootStackParamList = {
   [HOME_SCREEN]: undefined;
@@ -12,10 +12,13 @@ export type RootStackParamList = {
 
 const styles = StyleSheet.create({
   navList__item: {
-    margin: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 20,
-    backgroundColor: '#e5e7eb'
+    width: 140,
+    backgroundColor: '#e5e7eb',
+    padding: 6,
+    paddingLeft: 12,
+    paddingBottom: 24,
+    paddingTop: 12,
+    margin: 6
   },
   navList__itemImage: {
     width: 120,
@@ -23,15 +26,15 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
   navList__itemText: {
-    margin: 5,
+    marginTop: 6,
     fontSize: 13,
     lineHeight: 13,
     fontWeight: '600'
   },
   navList__itemNextIcon: {
-    width: 28,
-    padding: 2,
-    marginTop: 4,
+    width: 36,
+    padding: 6,
+    marginTop: 12,
     backgroundColor: 'black',
     borderRadius: 9999
   }

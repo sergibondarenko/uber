@@ -1,1 +1,2 @@
-export { NavOptions, RootStackParamList } from './navigation/NavOptions';
+export { NavOptions, RootStackParamList } from './NavOptions';
+export { PlacesFromAutocomplete } from './PlacesFromAutocomplete';
