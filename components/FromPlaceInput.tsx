@@ -28,7 +28,7 @@ export function FromPlaceInput() {
   const query = {
     key: UBER_APP_GOOGLE_API_KEY,
     language: 'en',
-    types: '(cities)'
+    // types: '(cities)'
   };
 
   return (

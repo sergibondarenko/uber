@@ -1,9 +1,11 @@
 import React from 'react';
-import { Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
 import { EatsImage, RideImage, IImage } from './images';
 import { MAP_SCREEN, EATS_SCREEN, HOME_SCREEN } from '../constants';
+import { useSelector } from 'react-redux';
+import { selectOrigin } from '../state/slices/navSlice';
 
 export type RootStackParamList = {
   [HOME_SCREEN]: undefined;
@@ -67,6 +69,7 @@ export function NavNextIcon() {
 
 export function NavList() {
   const navigation = useNavigation();
+  const origin = useSelector(selectOrigin);
   const navData: Array<INavOption> = [rideNavOption, eatNavOption];
 
   function handleItemPress(screenName: string) {
@@ -77,10 +80,16 @@ export function NavList() {
     const NavImage = item.image;
 
     return (
-      <TouchableOpacity style={styles.navList__item} onPress={() => handleItemPress(item.screen)}>
-        <NavImage style={styles.navList__itemImage} />
-        <Text style={styles.navList__itemText}>{item.title}</Text>
-        <NavNextIcon /> 
+      <TouchableOpacity
+        disabled={!origin}
+        style={styles.navList__item}
+        onPress={() => handleItemPress(item.screen)}
+      >
+        <View style={!origin && { opacity: 0.2 }}>
+          <NavImage style={styles.navList__itemImage} />
+          <Text style={styles.navList__itemText}>{item.title}</Text>
+          <NavNextIcon /> 
+        </View>
       </TouchableOpacity>
     );
   }

@@ -1,8 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 
+export interface INavStateOriginLocation {
+  lat: number;
+  lng: number;
+}
+
 export interface INavStateOrigin {
-  location: null | string;
+  location: INavStateOriginLocation;
   description: null | string;
 }
 
