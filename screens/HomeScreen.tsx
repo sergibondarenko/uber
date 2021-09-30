@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, View } from 'react-native';
-import { NavOptions, PlacesFromAutocomplete } from '../components';
+import { NavOptions, FromPlaceInput } from '../components';
 import { UberImage } from '../components/images';
 
 const styles = StyleSheet.create({
@@ -28,7 +28,7 @@ export function HomeScreen() {
     <SafeAreaView style={styles.homeScreen}>
       <View style={styles.homeScreen__view}>
         <Logo />
-        <PlacesFromAutocomplete />
+        <FromPlaceInput />
         <NavOptions />
       </View>
     </SafeAreaView>
