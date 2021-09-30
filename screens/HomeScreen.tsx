@@ -18,11 +18,14 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     resizeMode: 'contain'
-  },
-  placesInput__container: {
+  }
+});
+
+const rideFromInputStyles = StyleSheet.create({
+  container: {
     flex: 0
   },
-  placesInput__textInput: {
+  textInput: {
     fontSize: 18
   }
 });
@@ -31,27 +34,30 @@ export function Logo() {
   return <UberImage style={styles.homeScreen__image} />;
 }
 
-export function HomeScreen() {
+export function RideFromInput() {
   const dispatch = useDispatch();
 
+  return (
+    <PlacesInput
+      styles={rideFromInputStyles}
+      placeholder="Where from?"
+      onPress={(data, details) => {
+        dispatch(setOrigin({
+          location: details?.geometry.location,
+          description: data.description
+        }));
+        dispatch(setDestination(null));
+      }}
+    />
+  );
+}
+
+export function HomeScreen() {
   return (
     <SafeAreaView style={styles.homeScreen}>
       <View style={styles.homeScreen__view}>
         <Logo />
-        <PlacesInput
-          styles={{
-            container: styles.placesInput__container,
-            textInput: styles.placesInput__textInput
-          }}
-          placeholder="Where from?"
-          onPress={(data, details) => {
-            dispatch(setOrigin({
-              location: details?.geometry.location,
-              description: data.description
-            }));
-            dispatch(setDestination(null));
-          }}
-        />
+        <RideFromInput />
         <NavOptions />
       </View>
     </SafeAreaView>

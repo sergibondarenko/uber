@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const placesInputStyles = StyleSheet.create({
+const rideToInputStyles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     paddingTop: 20,
@@ -42,27 +42,33 @@ const placesInputStyles = StyleSheet.create({
   }
 });
 
-export function NavigateCard() {
+export function RideToInput() {
   const dispatch = useDispatch();
   const navigation = useNavigation()
 
   return (
+    <View>
+      <PlacesInput
+        styles={rideToInputStyles}
+        placeholder="Where to?"
+        onPress={(data, details) => {
+          dispatch(setDestination({
+            location: details?.geometry.location,
+            description: data.description
+          }));
+          navigation.navigate(RIDE_OPTIONS_CARD as never);
+        }}
+      />
+    </View>
+  );
+}
+
+export function NavigateCard() {
+  return (
     <SafeAreaView style={styles.navigateCard}>
       <Text style={styles.navigateCard__text}>Hello!</Text>
       <View style={styles.navigateCard__placesInputContainer}>
-        <View>
-          <PlacesInput
-            styles={placesInputStyles}
-            placeholder="Where to?"
-            onPress={(data, details) => {
-              dispatch(setDestination({
-                location: details?.geometry.location,
-                description: data.description
-              }));
-              navigation.navigate(RIDE_OPTIONS_CARD as never);
-            }}
-          />
-        </View>
+        <RideToInput />
       </View>
     </SafeAreaView>
   );
