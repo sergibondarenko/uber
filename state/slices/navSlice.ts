@@ -8,12 +8,16 @@ export interface INavStateOriginLocation {
 
 export interface INavStateOrigin {
   location: INavStateOriginLocation;
-  description: null | string;
+  description: undefined | string;
+}
+
+export interface INavStateDestination {
+  description: string
 }
 
 export interface INavState {
   origin: null | INavStateOrigin;
-  destination: null | string;
+  destination: null | INavStateDestination;
   travelTimeInformation: null | string;
 }
 
