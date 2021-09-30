@@ -7,11 +7,6 @@ import { MAP_SCREEN, EATS_SCREEN, HOME_SCREEN } from '../constants';
 import { useSelector } from 'react-redux';
 import { selectOrigin } from '../state/slices/navSlice';
 
-export type RootStackParamList = {
-  [HOME_SCREEN]: undefined;
-  [MAP_SCREEN]: undefined;
-};
-
 const styles = StyleSheet.create({
   navList__item: {
     width: 140,

@@ -6,8 +6,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { store } from './state/store';
 import { HomeScreen, MapScreen } from './screens';
-import { RootStackParamList } from './components';
-import { MAP_SCREEN, HOME_SCREEN } from './constants';
+import { HOME_SCREEN, MAP_SCREEN } from './constants';
+
+export type RootStackParamList = {
+  [HOME_SCREEN]: undefined;
+  [MAP_SCREEN]: undefined;
+};
   
 const Stack = createStackNavigator<RootStackParamList>();
 
