@@ -53,6 +53,9 @@ const ridesButtonStyles = StyleSheet.create({
     paddingRight: 12,
     paddingTop: 9,
     paddingBottom: 9,
+  },
+  title: {
+    fontSize: 16
   }
 });
 
@@ -67,7 +70,8 @@ const eatsButtonStyles = StyleSheet.create({
     paddingBottom: 9,
   },
   title: {
-    color: 'black'
+    color: 'black',
+    fontSize: 16
   }
 });
 
@@ -111,6 +115,7 @@ export function RidesButton() {
   return (
     <Button
       buttonStyle={ridesButtonStyles.button}
+      titleStyle={ridesButtonStyles.title}
       title="Rides"
       icon={
         <Icon name="car" type="font-awesome" color="white" size={16} />
