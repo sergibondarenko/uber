@@ -1,13 +1,14 @@
-import { useNavigation } from '@react-navigation/core';
 import React from 'react';
+import { useNavigation } from '@react-navigation/core';
 import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
+import { Icon, Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { setDestination } from '../state/slices/navSlice';
 import { PlacesInput } from './PlacesInput';
 import { RIDE_OPTIONS_CARD } from '../constants';
 import { NavFavourites } from './NavFavourites';
 
-const styles = StyleSheet.create({
+const navigateCardStyles = StyleSheet.create({
   navigateCard: {
     backgroundColor: 'white',
     flex: 1
@@ -43,6 +44,46 @@ const rideToInputStyles = StyleSheet.create({
   }
 });
 
+const ridesButtonStyles = StyleSheet.create({
+  button: {
+    backgroundColor: 'black',
+    borderRadius: 9999,
+    width: 92,
+    paddingLeft: 12,
+    paddingRight: 12,
+    paddingTop: 9,
+    paddingBottom: 9,
+  }
+});
+
+const eatsButtonStyles = StyleSheet.create({
+  button: {
+    backgroundColor: 'white',
+    borderRadius: 9999,
+    width: 92,
+    paddingLeft: 12,
+    paddingRight: 12,
+    paddingTop: 9,
+    paddingBottom: 9,
+  },
+  title: {
+    color: 'black'
+  }
+});
+
+const bottomNav = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    paddingBottom: 6,
+    paddingTop: 6,
+    marginTop: 'auto',
+    borderTopWidth: 1,
+    borderColor: '#f3f4f6'
+  }
+});
+
 export function RideToInput() {
   const dispatch = useDispatch();
   const navigation = useNavigation()
@@ -60,18 +101,58 @@ export function RideToInput() {
           navigation.navigate(RIDE_OPTIONS_CARD as never);
         }}
       />
-      <NavFavourites />
+    </View>
+  );
+}
+
+export function RidesButton() {
+  const navigation = useNavigation();
+
+  return (
+    <Button
+      buttonStyle={ridesButtonStyles.button}
+      title="Rides"
+      icon={
+        <Icon name="car" type="font-awesome" color="white" size={16} />
+      }
+      onPress={() => {
+        navigation.navigate(RIDE_OPTIONS_CARD as never);
+      }}
+    />
+  );
+}
+
+export function EatsButton() {
+  return (
+    <Button
+      buttonStyle={eatsButtonStyles.button}
+      titleStyle={eatsButtonStyles.title}
+      title="Eats"
+      icon={
+        <Icon name="fast-food-outline" type="ionicon" color="black" size={16} />
+      }
+    />
+  );
+}
+
+export function BottomNav() {
+  return (
+    <View style={bottomNav.container}>
+      <RidesButton />
+      <EatsButton />
     </View>
   );
 }
 
 export function NavigateCard() {
   return (
-    <SafeAreaView style={styles.navigateCard}>
-      <Text style={styles.navigateCard__text}>Hello!</Text>
-      <View style={styles.navigateCard__placesInputContainer}>
+    <SafeAreaView style={navigateCardStyles.navigateCard}>
+      <Text style={navigateCardStyles.navigateCard__text}>Hello!</Text>
+      <View style={navigateCardStyles.navigateCard__placesInputContainer}>
         <RideToInput />
+        <NavFavourites />
       </View>
+      <BottomNav />
     </SafeAreaView>
   );
 }

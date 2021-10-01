@@ -3,7 +3,7 @@ import { Text, View, FlatList, TouchableOpacity, StyleSheet } from 'react-native
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
 import { EatsImage, RideImage, IImage } from './images';
-import { MAP_SCREEN, EATS_SCREEN, HOME_SCREEN } from '../constants';
+import { MAP_SCREEN, EATS_SCREEN } from '../constants';
 import { useSelector } from 'react-redux';
 import { selectOrigin } from '../state/slices/navSlice';
 
