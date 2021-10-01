@@ -49,7 +49,11 @@ const rideToWork: INavFavouritesOption = {
   destination: 'London Eye, London, UK'
 };
 
-export function NavFavouritesItem({ item }: { item: INavFavouritesOption }) {
+interface INavFavouritesItemProps {
+  item: INavFavouritesOption
+}
+
+export function NavFavouritesItem({ item }: INavFavouritesItemProps) {
   function handleItemPress(destination: string) {
     console.log('destination', destination);
   }
@@ -81,7 +85,7 @@ export function NavFavourites() {
     <FlatList
       data={data}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }: { item: INavFavouritesOption }) => <NavFavouritesItem item={item} />}
+      renderItem={({ item }) => <NavFavouritesItem item={item} />}
       ItemSeparatorComponent={() => (
         <View style={styles.navFavourites__itemLineSeparator} />
       )}

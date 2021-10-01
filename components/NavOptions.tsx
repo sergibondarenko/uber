@@ -62,32 +62,36 @@ export function NavNextIcon() {
   return <Icon style={styles.navList__itemNextIcon} name="arrowright" color="white" type="antdesign" />;
 }
 
-export function NavList() {
+interface INavListItemProps {
+  item: INavOption,
+}
+
+export function NavListItem({ item }: INavListItemProps) {
+  const NavImage = item.image;
   const navigation = useNavigation();
   const origin = useSelector(selectOrigin);
-  const navData: Array<INavOption> = [rideNavOption, eatNavOption];
 
   function handleItemPress(screenName: string) {
     navigation.navigate(screenName as never);
   }
 
-  function renderItem({ item }: { item: INavOption }) {
-    const NavImage = item.image;
+  return (
+    <TouchableOpacity
+      disabled={!origin}
+      style={styles.navList__item}
+      onPress={() => handleItemPress(item.screen)}
+    >
+      <View style={!origin && { opacity: 0.2 }}>
+        <NavImage style={styles.navList__itemImage} />
+        <Text style={styles.navList__itemText}>{item.title}</Text>
+        <NavNextIcon /> 
+      </View>
+    </TouchableOpacity>
+  );
+}
 
-    return (
-      <TouchableOpacity
-        disabled={!origin}
-        style={styles.navList__item}
-        onPress={() => handleItemPress(item.screen)}
-      >
-        <View style={!origin && { opacity: 0.2 }}>
-          <NavImage style={styles.navList__itemImage} />
-          <Text style={styles.navList__itemText}>{item.title}</Text>
-          <NavNextIcon /> 
-        </View>
-      </TouchableOpacity>
-    );
-  }
+export function NavList() {
+  const navData: Array<INavOption> = [rideNavOption, eatNavOption];
 
   function keyExtractor(item: INavOption) {
     return item.id;
@@ -98,7 +102,7 @@ export function NavList() {
       data={navData}
       horizontal
       keyExtractor={keyExtractor}
-      renderItem={renderItem}
+      renderItem={({ item }) => <NavListItem item={item} />}
     />
   );
 }
