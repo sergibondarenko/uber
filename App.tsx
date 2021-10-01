@@ -1,4 +1,5 @@
 import React from 'react';
+import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import 'react-native-gesture-handler';
@@ -7,6 +8,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { store } from './state/store';
 import { HomeScreen, MapScreen } from './screens';
 import { HOME_SCREEN, MAP_SCREEN } from './constants';
+
+const styles = StyleSheet.create({
+  app_keyboardAvoidingView: {
+    flex: 1
+  }
+});
 
 export type RootStackParamList = {
   [HOME_SCREEN]: undefined;
@@ -20,22 +27,27 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <SafeAreaProvider>
-          <Stack.Navigator initialRouteName={HOME_SCREEN}>
-            <Stack.Screen
-              name={HOME_SCREEN}
-              component={HomeScreen}
-              options={{
-                headerShown: false
-              }}
-            />
-            <Stack.Screen
-              name={MAP_SCREEN}
-              component={MapScreen}
-              options={{
-                headerShown: false
-              }}
-            />
-          </Stack.Navigator>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={styles.app_keyboardAvoidingView}
+          >
+            <Stack.Navigator initialRouteName={HOME_SCREEN}>
+              <Stack.Screen
+                name={HOME_SCREEN}
+                component={HomeScreen}
+                options={{
+                  headerShown: false
+                }}
+              />
+              <Stack.Screen
+                name={MAP_SCREEN}
+                component={MapScreen}
+                options={{
+                  headerShown: false
+                }}
+              />
+            </Stack.Navigator>
+          </KeyboardAvoidingView>
         </SafeAreaProvider>
       </NavigationContainer>
     </Provider>
