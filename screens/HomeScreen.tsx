@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, View } from 'react-native';
-import { NavOptions, PlacesInput } from '../components';
+import { NavOptions, PlacesInput, NavFavourites } from '../components';
 import { UberImage } from '../components/images';
 import { useDispatch } from 'react-redux';
 import { setDestination, setOrigin } from '../state/slices/navSlice';
@@ -59,6 +59,7 @@ export function HomeScreen() {
         <Logo />
         <RideFromInput />
         <NavOptions />
+        <NavFavourites />
       </View>
     </SafeAreaView>
   );

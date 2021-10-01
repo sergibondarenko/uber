@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setDestination } from '../state/slices/navSlice';
 import { PlacesInput } from './PlacesInput';
 import { RIDE_OPTIONS_CARD } from '../constants';
+import { NavFavourites } from './NavFavourites';
 
 const styles = StyleSheet.create({
   navigateCard: {
@@ -59,6 +60,7 @@ export function RideToInput() {
           navigation.navigate(RIDE_OPTIONS_CARD as never);
         }}
       />
+      <NavFavourites />
     </View>
   );
 }
