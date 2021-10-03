@@ -1,31 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, TouchableOpacity, View, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
 import tw from 'tailwind-react-native-classnames';
-
-interface INavFavouritesOption {
-  id: string;
-  icon: string;
-  location: string;
-  destination: string;
-}
-
-const rideToHome: INavFavouritesOption = {
-  id: '123',
-  icon: 'home',
-  location: 'Home',
-  destination: '221b Baker St, London, UK'
-};
-
-const rideToWork: INavFavouritesOption = {
-  id: '456',
-  icon: 'briefcase',
-  location: 'Work',
-  destination: 'London Eye, London, UK'
-};
+import { FavouriteDestinationsService, IFavouriteDestinationOption } from '../services';
 
 interface INavFavouritesItemProps {
-  item: INavFavouritesOption
+  item: IFavouriteDestinationOption
 }
 
 export function NavFavouritesItem({ item }: INavFavouritesItemProps) {
@@ -54,11 +34,20 @@ export function NavFavouritesItem({ item }: INavFavouritesItemProps) {
 }
 
 export function NavFavourites() {
-  const data = [rideToHome, rideToWork];
+  const [favouriteDestinations, setFavouriteDestinations] = useState<Array<IFavouriteDestinationOption>>([]);
+  const favDestService = new FavouriteDestinationsService();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    setFavouriteDestinations(await favDestService.fetchAll());
+  }
 
   return (
     <FlatList
-      data={data}
+      data={favouriteDestinations}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => <NavFavouritesItem item={item} />}
       ItemSeparatorComponent={() => (

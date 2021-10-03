@@ -4,10 +4,16 @@ import tw from 'tailwind-react-native-classnames';
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/core';
 import { NAVIGATE_CARD } from '../constants';
-import { IImage, UberXImage, UberXLImage, UberLUXImage } from '../components/images';
 import { useSelector } from 'react-redux';
 import { selectTravelTimeInformation } from '../state/slices/navSlice';
-import { PriceService } from '../services';
+import { PriceService, RideOptionsService, IRideOption, IPriceNumberFormat } from '../services';
+import { UberXImage, UberXLImage, UberLUXImage, IImage } from '../components/images';
+
+const rideImages = {
+  uberx: UberXImage,
+  uberxl: UberXLImage,
+  uberlux: UberLUXImage
+};
 
 export interface INavigateBackButtonProps {
   onPress: () => void;
@@ -24,44 +30,16 @@ export function NavigateBackButton({ onPress }: INavigateBackButtonProps) {
   );
 }
 
-interface IRideOption {
-  id: string;
-  title: string;
-  multiplier: number;
-  image: IImage;
-}
-
-const data = [
-  {
-    id: '123',
-    title: 'UberX',
-    multiplier: 1,
-    image: UberXImage 
-  },
-  {
-    id: '456',
-    title: 'Uber XL',
-    multiplier: 1.2,
-    image: UberXLImage 
-  },
-  {
-    id: '789',
-    title: 'Uber LUX',
-    multiplier: 1.75,
-    image: UberLUXImage 
-  },
-];
-
 interface IRideListOptionProps {
   item: IRideOption;
-  priceFormat: IPriceFormat | null;
+  priceFormat: IPriceNumberFormat | null;
   selectedItemId: string | undefined;
   onPress: () => void;
 }
 
 export function RideListOption({ item, priceFormat, selectedItemId, onPress }: IRideListOptionProps) {
   const travelTimeInfo = useSelector(selectTravelTimeInformation);
-  const RideImage = item.image;
+  const RideImage = rideImages[item.image];
   const isSelected = selectedItemId === item.id;
 
   function renderPrice() {
@@ -97,30 +75,30 @@ export function SelectRideButton({ item }: ISelectRideButtonProps) {
   );
 }
 
-export interface IPriceFormat {
-  numberFormat: string;
-  style: string;
-  currency: string;
-  surgeChargeRate: number;
-}
-
 export function RideList() {
   const priceService = new PriceService();
+  const rideOptionsService = new RideOptionsService();
   const [selectedOption, setSelectedOption] = useState<IRideOption | null>(null);
-  const [priceFormat, setPriceFormat] = useState<IPriceFormat | null>(null);
+  const [priceFormat, setPriceFormat] = useState<IPriceNumberFormat | null>(null);
+  const [rideOptions, setRideOptions] = useState<Array<IRideOption>>([]);
 
   useEffect(() => {
     fetchData();
   }, []);
 
   async function fetchData() {
-    setPriceFormat(await priceService.getNumberFormat());
+    const [priceFormat, rideOptions] = await Promise.all([
+      priceService.getNumberFormat(),
+      rideOptionsService.fetchAll()
+    ])
+    setPriceFormat(priceFormat);
+    setRideOptions(rideOptions);
   }
 
   return (
     <>
       <FlatList
-        data={data}
+        data={rideOptions}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => 
           <RideListOption
