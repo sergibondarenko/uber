@@ -15,6 +15,7 @@ export function RideFromInput() {
 
   return (
     <PlacesInput
+      navPoint="start"
       styles={{
         container: { flex: 0 },
         textInput: { fontSize: 18 }
@@ -38,7 +39,7 @@ export function HomeScreen() {
         <Logo />
         <RideFromInput />
         <NavOptions />
-        <NavFavourites />
+        <NavFavourites navPoint="start" />
       </View>
     </SafeAreaView>
   );

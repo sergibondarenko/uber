@@ -50,7 +50,7 @@ export function RideListOption({ item, priceFormat, selectedItemId, onPress }: I
 
   return (
     <TouchableOpacity
-      style={tw`flex-row items-center justify-between px-10 ${isSelected ? 'bg-gray-200' : ''}`}
+      style={tw`flex-row items-center justify-between px-4 ${isSelected ? 'bg-gray-200' : ''}`}
       onPress={onPress}  
     >
       <RideImage style={{ width: 100, height: 100, resizeMode: 'contain' }} />

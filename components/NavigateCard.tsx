@@ -16,6 +16,7 @@ export function RideToInput() {
   return (
     <View>
       <PlacesInput
+        navPoint="finish"
         styles={{
           container: {
             backgroundColor: 'white',
@@ -90,7 +91,7 @@ export function NavigateCard() {
       <Text style={tw`text-center py-5 text-xl`}>Hello!</Text>
       <View style={tw`border-t border-gray-200 flex-shrink`}>
         <RideToInput />
-        <NavFavourites />
+        <NavFavourites navPoint="finish" />
       </View>
       <BottomNav />
     </SafeAreaView>

@@ -6,14 +6,23 @@ import { Map, NavigateCard, RideOptionsCard } from '../components';
 import { NAVIGATE_CARD, RIDE_OPTIONS_CARD, HOME_SCREEN } from '../constants';
 import { useNavigation } from '@react-navigation/core';
 import tw from 'tailwind-react-native-classnames';
+import { useDispatch } from 'react-redux';
+import { setDestination, setOrigin } from '../state/slices/navSlice';
 
 export function MapMenuButton() {
   const nav = useNavigation();
+  const dispatch = useDispatch();
+
+  function handlePress() {
+    dispatch(setDestination(null));
+    dispatch(setOrigin(null));
+    nav.navigate(HOME_SCREEN as never);
+  }
 
   return(
     <TouchableOpacity
       style={tw`bg-gray-100 absolute top-16 left-8 z-50 p-3 rounded-full`}
-      onPress={() => nav.navigate(HOME_SCREEN as never)}
+      onPress={handlePress}
     >
       <Icon name="menu" />
     </TouchableOpacity>

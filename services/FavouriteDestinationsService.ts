@@ -1,8 +1,10 @@
+import { INavStateDestination } from '../state/slices/navSlice';
+
 export interface IFavouriteDestinationOption {
   id: string;
   icon: string;
   location: string;
-  destination: string;
+  destination: INavStateDestination;
 }
 
 export interface IFavouriteDestinationsService {
@@ -16,13 +18,25 @@ export class FavouriteDestinationsService implements IFavouriteDestinationsServi
         id: '123',
         icon: 'home',
         location: 'Home',
-        destination: '221b Baker St, London, UK'
+        destination: {
+          description: '221B Baker Street, London, UK',
+          location: {
+            lat: 51.523767,
+            lng: -0.1585557,
+          },
+        }
       },
       {
         id: '456',
         icon: 'briefcase',
         location: 'Work',
-        destination: 'London Eye, London, UK'
+        destination: {
+          description: 'Baskerville Hall Hotel, Clyro Court, Hereford HR3 5LE, UK',
+          location: {
+            lat: 52.0785816,
+            lng: -3.1567497,
+          },
+        }
       }
     ]);
   }
