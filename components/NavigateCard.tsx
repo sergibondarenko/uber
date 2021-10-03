@@ -2,8 +2,8 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { useDispatch } from 'react-redux';
-import { setDestination } from '../state/slices/navSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectDestination, setDestination } from '../state/slices/navSlice';
 import { PlacesInput } from './PlacesInput';
 import { RIDE_OPTIONS_CARD } from '../constants';
 import { NavFavourites } from './NavFavourites';
@@ -47,10 +47,12 @@ export function RideToInput() {
 
 export function RidesButton() {
   const navigation = useNavigation();
+  const destination = useSelector(selectDestination);
 
   return (
     <TouchableOpacity
-      style={tw`flex flex-row justify-between bg-black w-24 px-4 py-3 rounded-full`}
+      disabled={!destination}
+      style={tw`flex flex-row justify-between bg-black w-24 px-4 py-3 rounded-full ${!destination ? 'bg-gray-300' : ''}`}
       onPress={() => {
         navigation.navigate(RIDE_OPTIONS_CARD as never);
       }}

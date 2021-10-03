@@ -43,7 +43,7 @@ export function RideListOption({ item, priceFormat, selectedItemId, onPress }: I
   const isSelected = selectedItemId === item.id;
 
   function renderPrice() {
-    if (!travelTimeInfo || !priceFormat) return null;
+    if (!travelTimeInfo?.duration?.value || !priceFormat) return 'Unavailable';
     return Intl.NumberFormat(priceFormat.numberFormat, { style: priceFormat.style, currency: priceFormat.currency })
       .format(travelTimeInfo.duration.value * priceFormat.surgeChargeRate * item.multiplier / 100);
   }
@@ -56,7 +56,7 @@ export function RideListOption({ item, priceFormat, selectedItemId, onPress }: I
       <RideImage style={{ width: 100, height: 100, resizeMode: 'contain' }} />
       <View style={tw`-ml-6`}>
         <Text style={tw`text-xl font-semibold`}>{item.title}</Text>
-        <Text>{travelTimeInfo?.duration.text} travel time</Text>
+        <Text>{travelTimeInfo?.duration?.text} travel time</Text>
       </View>
       <Text style={tw`text-xl`}>{renderPrice()}</Text>
     </TouchableOpacity>
@@ -129,7 +129,7 @@ export function RideOptionsCard() {
       <View>
         <NavigateBackButton onPress={handleNavigetBack} />
         <Text style={tw`text-center py-2 text-xl`}>
-          Select a ride {travelTimeInfo?.distance.text}
+          Select a ride {travelTimeInfo?.distance?.text}
         </Text>
       </View>
       <RideList />
