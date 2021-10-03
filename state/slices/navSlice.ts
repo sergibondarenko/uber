@@ -16,10 +16,16 @@ export interface INavStateDestination {
   description: undefined | string;
 }
 
+export interface INavStateTravelTimeInformation {
+  distance: { text: string, value: number },
+  duration: { text: string, value: number },
+  status: string
+}
+
 export interface INavState {
   origin: null | INavStateOrigin;
   destination: null | INavStateDestination;
-  travelTimeInformation: null | string;
+  travelTimeInformation: null | INavStateTravelTimeInformation;
 }
 
 const initialState: INavState = {

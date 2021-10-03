@@ -5,6 +5,8 @@ import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/core';
 import { NAVIGATE_CARD } from '../constants';
 import { IImage, UberXImage, UberXLImage, UberLUXImage } from '../components/images';
+import { useSelector } from 'react-redux';
+import { selectTravelTimeInformation } from '../state/slices/navSlice';
 
 export interface INavigateBackButtonProps {
   onPress: () => void;
@@ -56,6 +58,7 @@ interface IRideListOptionProps {
 }
 
 export function RideListOption({ item, selectedItemId, onPress }: IRideListOptionProps) {
+  const travelTimeInfo = useSelector(selectTravelTimeInformation);
   const RideImage = item.image;
   const isSelected = selectedItemId === item.id;
 
@@ -67,7 +70,7 @@ export function RideListOption({ item, selectedItemId, onPress }: IRideListOptio
       <RideImage style={{ width: 100, height: 100, resizeMode: 'contain' }} />
       <View style={tw`-ml-6`}>
         <Text style={tw`text-xl font-semibold`}>{item.title}</Text>
-        <Text>Travel time</Text>
+        <Text>{travelTimeInfo?.duration.text} travel time</Text>
       </View>
       <Text style={tw`text-xl`}>£99</Text>
     </TouchableOpacity>
@@ -111,6 +114,7 @@ export function RideList() {
 
 export function RideOptionsCard() {
   const navigation = useNavigation();
+  const travelTimeInfo = useSelector(selectTravelTimeInformation);
 
   function handleNavigetBack() {
     navigation.navigate(NAVIGATE_CARD as never);
@@ -121,7 +125,7 @@ export function RideOptionsCard() {
       <View>
         <NavigateBackButton onPress={handleNavigetBack} />
         <Text style={tw`text-center py-2 text-xl`}>
-          Select a ride
+          Select a ride {travelTimeInfo?.distance.text}
         </Text>
       </View>
       <RideList />

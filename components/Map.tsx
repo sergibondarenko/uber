@@ -1,10 +1,11 @@
 import React, { useRef, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
-import { selectDestination, selectOrigin, INavStateDestination, INavStateOrigin } from '../state/slices/navSlice';
+import { selectDestination, selectOrigin, INavStateDestination, INavStateOrigin, setTravelTimeInformation } from '../state/slices/navSlice';
 import { UBER_APP_GOOGLE_API_KEY } from '@env';
+import { DistanceMatrixService } from '../services';
 
 const styles = StyleSheet.create({
   map: {
@@ -21,12 +22,15 @@ function createMapCoordinates(props?: INavStateOrigin | INavStateDestination | n
 
 export function Map() {
   const mapRef = useRef<MapView>(null)
+  const dispatch = useDispatch();
   const origin = useSelector(selectOrigin);
   const destination = useSelector(selectDestination);
   const markerDescription = origin?.description || undefined;
+  const distMatrixService = new DistanceMatrixService({ apiKey: UBER_APP_GOOGLE_API_KEY });
 
   useEffect(() => {
     fitMapToCoordinates();
+    calculateDistanceMatrix();
   }, [origin, destination]);
 
   function fitMapToCoordinates() {
@@ -40,6 +44,15 @@ export function Map() {
         animated: true
       }
     );
+  }
+
+  async function calculateDistanceMatrix() {
+    if (!origin || !destination) return;
+    const data = await distMatrixService.getTravelTime({
+      origins: origin.description as string,
+      destinations: destination.description as string
+    });
+    dispatch(setTravelTimeInformation(data.rows[0].elements[0]));
   }
 
   return (
