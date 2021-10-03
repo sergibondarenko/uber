@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, SafeAreaView, Text, TouchableOpacity, FlatList, Image } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 import { Icon } from 'react-native-elements';
@@ -7,6 +7,7 @@ import { NAVIGATE_CARD } from '../constants';
 import { IImage, UberXImage, UberXLImage, UberLUXImage } from '../components/images';
 import { useSelector } from 'react-redux';
 import { selectTravelTimeInformation } from '../state/slices/navSlice';
+import { PriceService } from '../services';
 
 export interface INavigateBackButtonProps {
   onPress: () => void;
@@ -53,14 +54,21 @@ const data = [
 
 interface IRideListOptionProps {
   item: IRideOption;
+  priceFormat: IPriceFormat | null;
   selectedItemId: string | undefined;
   onPress: () => void;
 }
 
-export function RideListOption({ item, selectedItemId, onPress }: IRideListOptionProps) {
+export function RideListOption({ item, priceFormat, selectedItemId, onPress }: IRideListOptionProps) {
   const travelTimeInfo = useSelector(selectTravelTimeInformation);
   const RideImage = item.image;
   const isSelected = selectedItemId === item.id;
+
+  function renderPrice() {
+    if (!travelTimeInfo || !priceFormat) return null;
+    return Intl.NumberFormat(priceFormat.numberFormat, { style: priceFormat.style, currency: priceFormat.currency })
+      .format(travelTimeInfo?.duration.value * priceFormat.surgeChargeRate * item.multiplier / 100);
+  }
 
   return (
     <TouchableOpacity
@@ -72,7 +80,7 @@ export function RideListOption({ item, selectedItemId, onPress }: IRideListOptio
         <Text style={tw`text-xl font-semibold`}>{item.title}</Text>
         <Text>{travelTimeInfo?.duration.text} travel time</Text>
       </View>
-      <Text style={tw`text-xl`}>£99</Text>
+      <Text style={tw`text-xl`}>{renderPrice()}</Text>
     </TouchableOpacity>
   );
 }
@@ -89,8 +97,25 @@ export function SelectRideButton({ item }: ISelectRideButtonProps) {
   );
 }
 
+export interface IPriceFormat {
+  numberFormat: string;
+  style: string;
+  currency: string;
+  surgeChargeRate: number;
+}
+
 export function RideList() {
+  const priceService = new PriceService();
   const [selectedOption, setSelectedOption] = useState<IRideOption | null>(null);
+  const [priceFormat, setPriceFormat] = useState<IPriceFormat | null>(null);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    setPriceFormat(await priceService.getNumberFormat());
+  }
 
   return (
     <>
@@ -100,12 +125,13 @@ export function RideList() {
         renderItem={({ item }) => 
           <RideListOption
             item={item}
+            priceFormat={priceFormat}
             onPress={() => setSelectedOption(item)}
             selectedItemId={selectedOption?.id}
           />
         }
       />
-      <View>
+      <View style={tw`mt-auto border-t border-gray-200`}>
         <SelectRideButton item={selectedOption} />
       </View>
     </>
