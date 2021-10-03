@@ -1,8 +1,24 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Icon } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Map, NavigateCard, RideOptionsCard } from '../components';
-import { NAVIGATE_CARD, RIDE_OPTIONS_CARD } from '../constants';
+import { NAVIGATE_CARD, RIDE_OPTIONS_CARD, HOME_SCREEN } from '../constants';
+import { useNavigation } from '@react-navigation/core';
+import tw from 'tailwind-react-native-classnames';
+
+export function MapMenuButton() {
+  const nav = useNavigation();
+
+  return(
+    <TouchableOpacity
+      style={tw`bg-gray-100 absolute top-16 left-8 z-50 p-3 rounded-full`}
+      onPress={() => nav.navigate(HOME_SCREEN as never)}
+    >
+      <Icon name="menu" />
+    </TouchableOpacity>
+  );
+}
 
 const styles = StyleSheet.create({
   mapScreen_topView: {
@@ -23,6 +39,7 @@ const Stack = createStackNavigator<MapScreenStackParamList>();
 export function MapScreen() {
   return (
     <View>
+      <MapMenuButton />
       <View style={styles.mapScreen_topView}>
         <Map />
       </View>
