@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { GooglePlacesAutocomplete, GooglePlaceData, GooglePlaceDetail } from 'react-native-google-places-autocomplete';
+import { GooglePlacesAutocomplete, GooglePlaceData, GooglePlaceDetail, GooglePlacesAutocompleteRef } from 'react-native-google-places-autocomplete';
 import { UBER_APP_GOOGLE_API_KEY } from '@env';
 import { useSelector } from 'react-redux';
 import { selectDestination, selectOrigin } from '../state/slices/navSlice';
@@ -14,7 +14,7 @@ export interface PlacesInputProps {
 }
 
 export function PlacesInput({ styles, query, placeholder, onPress, navPoint }: PlacesInputProps) {    
-  const ref = useRef(null);
+  const ref = useRef<GooglePlacesAutocompleteRef>(null);
   const origin = useSelector(selectOrigin);
   const destination = useSelector(selectDestination);
 
@@ -27,9 +27,9 @@ export function PlacesInput({ styles, query, placeholder, onPress, navPoint }: P
   }
 
   useEffect(() => {
-    if (navPoint === 'start' && origin) {
+    if (navPoint === 'start' && origin?.description) {
       ref?.current?.setAddressText(origin.description);
-    } else if (navPoint === 'finish' && destination) {
+    } else if (navPoint === 'finish' && destination?.description) {
       ref?.current?.setAddressText(destination.description);
     }
   }, [origin, destination]);
