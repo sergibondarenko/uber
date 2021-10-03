@@ -1,37 +1,13 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { NavOptions, PlacesInput, NavFavourites } from '../components';
 import { UberImage } from '../components/images';
 import { useDispatch } from 'react-redux';
 import { setDestination, setOrigin } from '../state/slices/navSlice';
-
-const styles = StyleSheet.create({
-  homeScreen: {
-    backgroundColor: 'white',
-    height: '100%'
-  },
-  homeScreen__view: {
-    padding: 20,
-    flexDirection: 'column'
-  },
-  homeScreen__image: {
-    width: 100,
-    height: 100,
-    resizeMode: 'contain'
-  }
-});
-
-const rideFromInputStyles = StyleSheet.create({
-  container: {
-    flex: 0
-  },
-  textInput: {
-    fontSize: 18
-  }
-});
+import tw from 'tailwind-react-native-classnames';
 
 export function Logo() {
-  return <UberImage style={styles.homeScreen__image} />;
+  return <UberImage style={{ width: 100, height: 100, resizeMode: 'contain' }} />;
 }
 
 export function RideFromInput() {
@@ -39,7 +15,10 @@ export function RideFromInput() {
 
   return (
     <PlacesInput
-      styles={rideFromInputStyles}
+      styles={{
+        container: { flex: 0 },
+        textInput: { fontSize: 18 }
+      }}
       placeholder="Where from?"
       onPress={(data, details) => {
         dispatch(setOrigin({
@@ -54,8 +33,8 @@ export function RideFromInput() {
 
 export function HomeScreen() {
   return (
-    <SafeAreaView style={styles.homeScreen}>
-      <View style={styles.homeScreen__view}>
+    <SafeAreaView style={tw`bg-white h-full`}>
+      <View style={tw`p-5`}>
         <Logo />
         <RideFromInput />
         <NavOptions />

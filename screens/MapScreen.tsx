@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Map, NavigateCard, RideOptionsCard } from '../components';
@@ -20,15 +20,6 @@ export function MapMenuButton() {
   );
 }
 
-const styles = StyleSheet.create({
-  mapScreen_topView: {
-    height: '50%',
-  },
-  mapScreen_bottomView: {
-    height: '50%',
-  }
-});
-
 export type MapScreenStackParamList = {
   [NAVIGATE_CARD]: undefined;
   [RIDE_OPTIONS_CARD]: undefined;
@@ -40,10 +31,10 @@ export function MapScreen() {
   return (
     <View>
       <MapMenuButton />
-      <View style={styles.mapScreen_topView}>
+      <View style={tw`h-1/2`}>
         <Map />
       </View>
-      <View style={styles.mapScreen_bottomView}>
+      <View style={tw`h-1/2`}>
         <Stack.Navigator>
           <Stack.Screen
             name={NAVIGATE_CARD}

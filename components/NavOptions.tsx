@@ -1,41 +1,12 @@
 import React from 'react';
-import { Text, View, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
 import { EatsImage, RideImage, IImage } from './images';
 import { MAP_SCREEN, EATS_SCREEN } from '../constants';
 import { useSelector } from 'react-redux';
 import { selectOrigin } from '../state/slices/navSlice';
-
-const styles = StyleSheet.create({
-  navList__item: {
-    width: 140,
-    backgroundColor: '#e5e7eb',
-    padding: 6,
-    paddingLeft: 12,
-    paddingBottom: 24,
-    paddingTop: 12,
-    margin: 6
-  },
-  navList__itemImage: {
-    width: 120,
-    height: 120,
-    resizeMode: 'contain'
-  },
-  navList__itemText: {
-    marginTop: 6,
-    fontSize: 13,
-    lineHeight: 13,
-    fontWeight: '600'
-  },
-  navList__itemNextIcon: {
-    width: 36,
-    padding: 6,
-    marginTop: 12,
-    backgroundColor: 'black',
-    borderRadius: 9999
-  }
-});
+import tw from 'tailwind-react-native-classnames';
 
 export interface INavOption {
   id: string;
@@ -59,7 +30,12 @@ const eatNavOption: INavOption = {
 };
 
 export function NavNextIcon() {
-  return <Icon style={styles.navList__itemNextIcon} name="arrowright" color="white" type="antdesign" />;
+  return  <Icon
+    style={tw`p-2 bg-black rounded-full w-10 mt-4`}
+    name="arrowright"
+    color="white"
+    type="antdesign"
+  />;
 }
 
 interface INavListItemProps {
@@ -78,12 +54,12 @@ export function NavListItem({ item }: INavListItemProps) {
   return (
     <TouchableOpacity
       disabled={!origin}
-      style={styles.navList__item}
+      style={tw`p-2 pl-6 pb-8 pt-4 bg-gray-200 m-2 w-40`}
       onPress={() => handleItemPress(item.screen)}
     >
       <View style={!origin && { opacity: 0.2 }}>
-        <NavImage style={styles.navList__itemImage} />
-        <Text style={styles.navList__itemText}>{item.title}</Text>
+        <NavImage style={{ width: 120, height: 120, resizeMode: 'contain' }} />
+        <Text style={tw`mt-2 text-lg font-semibold`}>{item.title}</Text>
         <NavNextIcon /> 
       </View>
     </TouchableOpacity>

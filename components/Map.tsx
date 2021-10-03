@@ -1,17 +1,11 @@
 import React, { useRef, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { useDispatch, useSelector } from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
 import { selectDestination, selectOrigin, INavStateDestination, INavStateOrigin, setTravelTimeInformation } from '../state/slices/navSlice';
 import { UBER_APP_GOOGLE_API_KEY } from '@env';
 import { DistanceMatrixService } from '../services';
-
-const styles = StyleSheet.create({
-  map: {
-    flex: 1
-  }
-});
+import tw from 'tailwind-react-native-classnames';
 
 function createMapCoordinates(props?: INavStateOrigin | INavStateDestination | null) {
   return {
@@ -58,7 +52,7 @@ export function Map() {
   return (
     <MapView
       ref={mapRef}
-      style={styles.map}
+      style={tw`flex-1`}
       mapType="mutedStandard"
       initialRegion={{
         latitudeDelta: 0.005,

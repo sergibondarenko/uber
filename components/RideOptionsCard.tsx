@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, SafeAreaView, Text, TouchableOpacity, FlatList, Image } from 'react-native';
+import { View, SafeAreaView, Text, TouchableOpacity, FlatList } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/core';
@@ -67,7 +67,7 @@ export function RideListOption({ item, priceFormat, selectedItemId, onPress }: I
   function renderPrice() {
     if (!travelTimeInfo || !priceFormat) return null;
     return Intl.NumberFormat(priceFormat.numberFormat, { style: priceFormat.style, currency: priceFormat.currency })
-      .format(travelTimeInfo?.duration.value * priceFormat.surgeChargeRate * item.multiplier / 100);
+      .format(travelTimeInfo.duration.value * priceFormat.surgeChargeRate * item.multiplier / 100);
   }
 
   return (

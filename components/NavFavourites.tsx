@@ -1,32 +1,7 @@
 import React from 'react';
-import { StyleSheet, FlatList, TouchableOpacity, View, Text } from 'react-native';
+import { FlatList, TouchableOpacity, View, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
-
-const styles = StyleSheet.create({
-  navFavourites__itemContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 15
-  },
-  navFavourites__itemIcon: {
-    padding: 9,
-    margin: 12,
-    borderRadius: 9999,
-    backgroundColor: '#d1d5db'
-  },
-  navFavourites__itemLocation: {
-    fontWeight: '600',
-    fontSize: 15,
-    lineHeight: 21    
-  },
-  navFavourites__itemDestination: {
-    color: '#6b7280'
-  },
-  navFavourites__itemLineSeparator: {
-    backgroundColor: '#e5e7eb',
-    height: 0.5
-  }
-});
+import tw from 'tailwind-react-native-classnames';
 
 interface INavFavouritesOption {
   id: string;
@@ -60,19 +35,19 @@ export function NavFavouritesItem({ item }: INavFavouritesItemProps) {
 
   return (
     <TouchableOpacity
-      style={styles.navFavourites__itemContainer}
+      style={tw`flex-grow flex-row items-center p-5`}
       onPress={() => handleItemPress(item.destination)}
     >
       <Icon
-        style={styles.navFavourites__itemIcon}
+        style={tw`mr-4 rounded-full bg-gray-300 p-3`}
         name={item.icon}
         type="ionicon"
         color="white"
         size={18}
       />
       <View>
-        <Text style={styles.navFavourites__itemLocation}>{item.location}</Text>
-        <Text style={styles.navFavourites__itemDestination}>{item.destination}</Text>
+        <Text style={tw`font-semibold text-lg`}>{item.location}</Text>
+        <Text style={tw`text-gray-500`}>{item.destination}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -87,7 +62,7 @@ export function NavFavourites() {
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => <NavFavouritesItem item={item} />}
       ItemSeparatorComponent={() => (
-        <View style={styles.navFavourites__itemLineSeparator} />
+        <View style={tw`bg-gray-200 h-px`} />
       )}
     />
   );
