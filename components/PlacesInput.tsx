@@ -27,12 +27,19 @@ export function PlacesInput({ styles, query, placeholder, onPress, navPoint }: P
   }
 
   useEffect(() => {
-    if (navPoint === 'start' && origin?.description) {
-      ref?.current?.setAddressText(origin.description);
-    } else if (navPoint === 'finish' && destination?.description) {
-      ref?.current?.setAddressText(destination.description);
-    }
+    setInputText();
   }, [origin, destination]);
+
+  function setInputText() {
+    const origDescr = origin?.description || '';
+    const destDescr = destination?.description || '';
+
+    if (navPoint === 'start') {
+      ref?.current?.setAddressText(origDescr);
+    } else if (navPoint === 'finish') {
+      ref?.current?.setAddressText(destDescr);
+    }
+  }
 
   return (
     <GooglePlacesAutocomplete
