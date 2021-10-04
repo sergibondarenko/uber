@@ -7,7 +7,9 @@ import { NAVIGATE_CARD } from '../constants';
 import { useSelector } from 'react-redux';
 import { selectTravelTimeInformation } from '../state/slices/navSlice';
 import { PriceService, RideOptionsService, IRideOption, IPriceNumberFormat } from '../services';
-import { UberXImage, UberXLImage, UberLUXImage, IImage } from '../components/images';
+import { UberXImage, UberXLImage, UberLUXImage } from '../components/images';
+import 'intl'; // Must import it to make the app work on the real Android device.
+import 'intl/locale-data/jsonp/en'; // Must import it to make the app work on the real Android device. 
 
 const rideImages = {
   uberx: UberXImage,
