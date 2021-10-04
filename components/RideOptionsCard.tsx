@@ -24,7 +24,7 @@ export interface INavigateBackButtonProps {
 export function NavigateBackButton({ onPress }: INavigateBackButtonProps) {
   return (
     <TouchableOpacity
-      style={tw`absolute left-5 p-3 rounded-full z-50`}
+      style={tw`absolute left-5 p-3 py-6 rounded-full z-50`}
       onPress={onPress}
     >
       <Icon name="chevron-left" type="fontawesome" />
@@ -56,7 +56,7 @@ export function RideListOption({ item, priceFormat, selectedItemId, onPress }: I
       onPress={onPress}  
     >
       <RideImage style={{ width: 100, height: 100, resizeMode: 'contain' }} />
-      <View style={tw`-ml-6`}>
+      <View style={tw`flex-1`}>
         <Text style={tw`text-xl font-semibold`}>{item.title}</Text>
         <Text>{travelTimeInfo?.duration?.text} travel time</Text>
       </View>
@@ -71,7 +71,7 @@ export interface ISelectRideButtonProps {
 
 export function SelectRideButton({ item }: ISelectRideButtonProps) {
   return (
-    <TouchableOpacity disabled={!item} style={tw`bg-black py-2 m-2 ${!item ? 'bg-gray-300' : ''}`}>
+    <TouchableOpacity disabled={!item} style={tw`bg-black py-3 m-3 ${!item ? 'bg-gray-300' : ''}`}>
       <Text style={tw`text-center text-white text-xl`}>Choose {item?.title}</Text>
     </TouchableOpacity>
   );
@@ -128,9 +128,9 @@ export function RideOptionsCard() {
 
   return (
     <SafeAreaView style={tw`bg-white flex-grow`}>
-      <View>
+      <View style={tw`border-b border-gray-200`}>
         <NavigateBackButton onPress={handleNavigetBack} />
-        <Text style={tw`text-center py-2 text-xl`}>
+        <Text style={tw`text-center py-5 text-xl`}>
           Select a ride {travelTimeInfo?.distance?.text}
         </Text>
       </View>
