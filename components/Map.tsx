@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import MapView, { Marker, Polyline } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { useDispatch, useSelector } from 'react-redux';
 import MapViewDirections from 'react-native-maps-directions';
 import { selectDestination, selectOrigin, INavStateDestination, INavStateOrigin, setTravelTimeInformation } from '../state/slices/navSlice';
@@ -31,9 +31,11 @@ export function Map() {
 
   function fitMapToCoordinates() {
     if (!origin || !destination) return;
-    const coordinates = [createMapCoordinates(origin), createMapCoordinates(destination)];
     mapRef?.current?.fitToCoordinates(
-      coordinates, {
+      [
+        createMapCoordinates(origin),
+        createMapCoordinates(destination)
+      ], {
         edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
         animated: true
       }
@@ -54,10 +56,6 @@ export function Map() {
       ref={mapRef}
       style={tw`flex-1`}
       mapType="mutedStandard"
-      onMapReady={() => {
-        fitMapToCoordinates();
-        calculateDistanceMatrix();
-      }}
       initialRegion={{
         latitudeDelta: 0.005,
         longitudeDelta: 0.005,
